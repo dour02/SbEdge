@@ -12,8 +12,8 @@ android {
         applicationId = "io.github.dour02.sbedge"
         minSdk = 33
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.2"
     }
 
     signingConfigs {

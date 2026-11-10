@@ -68,6 +68,12 @@ public class Main extends XposedModule {
             }
         }
         log(hooked.isEmpty() ? Log.WARN : Log.INFO, TAG, "hooked " + hooked.size() + " method(s)");
+
+        try {
+            new Clock(this).install(cl);
+        } catch (Throwable t) {
+            log(Log.ERROR, TAG, "clock hook failed", t);
+        }
     }
 
     /** 在 clazz 及其父类中找到第一个实现了 name 的类，hook 其中所有返回 int/float 的同名方法。 */
@@ -121,18 +127,33 @@ public class Main extends XposedModule {
 
     /** 读设定值（dp）。返回 null 表示保持系统原值。 */
     private static Float readDp(String key) {
-        String value = null;
-        try {
-            ContentResolver cr = resolver();
-            if (cr != null) value = Settings.Global.getString(cr, key);
-        } catch (Throwable ignored) {
-        }
+        String value = readString(key);
         if (value == null || value.trim().isEmpty()) return DEFAULT_DP;
         try {
             float dp = Float.parseFloat(value.trim());
             return dp < 0 ? null : dp;
         } catch (NumberFormatException e) {
             return DEFAULT_DP;
+        }
+    }
+
+    /** 读 Settings.Global 里的字符串，读不到返回 null。 */
+    static String readString(String key) {
+        try {
+            ContentResolver cr = resolver();
+            return cr == null ? null : Settings.Global.getString(cr, key);
+        } catch (Throwable t) {
+            return null;
+        }
+    }
+
+    static float readFloat(String key, float def) {
+        String value = readString(key);
+        if (value == null) return def;
+        try {
+            return Float.parseFloat(value.trim());
+        } catch (NumberFormatException e) {
+            return def;
         }
     }
 

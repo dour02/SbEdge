@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SbEdge</string>
-    <string name="xposed_description">One UI 状态栏左右边界：去掉两侧留白，适用于各种挖孔布局（含去除挖孔后的 NoCutout）。边距用 settings put global sbedge_left_dp / sbedge_right_dp 设置（dp）。</string>
+    <string name="xposed_description">One UI 状态栏：去掉左右两侧留白（含去除挖孔后的 NoCutout），可选双行日期时间时钟。设置见 README。</string>
 </resources>

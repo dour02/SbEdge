@@ -22,6 +22,27 @@ pkill -f com.android.systemui
 - 设为负数（如 `-1`）表示这一侧保持系统原值。
 - 恢复默认：`settings delete global sbedge_left_dp`、`settings delete global sbedge_right_dp`。
 
+## 双行时钟（可选）
+
+把状态栏时钟改成上下两行（例如上面日期、下面时间）。`\n` 表示换行，格式和 Java 的 SimpleDateFormat 一样：
+
+```sh
+settings put global sbedge_clock_format 'M月d日 E\nHH:mm'
+settings put global sbedge_clock_scale 0.6     # 相对原字号的比例，默认 0.6
+pkill -f com.android.systemui
+```
+
+两行大小可以分开设置（没单独设置的行用 `sbedge_clock_scale`）：
+
+```sh
+settings put global sbedge_clock_line1_scale 0.5   # 第一行（日期）
+settings put global sbedge_clock_line2_scale 0.75  # 第二行（时间）
+pkill -f com.android.systemui
+```
+
+- 删除设置即恢复单行：`settings delete global sbedge_clock_format`。
+- 使用时请关闭 OneUIX 的“状态栏时钟格式”，两者会改同一个时钟。
+
 ## 构建
 
 推送到 GitHub 后，Actions 会自动编译，并发布一个 Release（`build-<编号>`），APK 可以直接在手机上下载。
