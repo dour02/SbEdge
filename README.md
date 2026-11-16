@@ -40,6 +40,24 @@ settings put global sbedge_clock_line2_scale 0.75  # 第二行（时间）
 pkill -f com.android.systemui
 ```
 
+粗体也可以分行设置（`1` 开、`0` 关；没单独设置的行用 `sbedge_clock_bold`，默认不加粗）：
+
+```sh
+settings put global sbedge_clock_bold 1          # 两行都加粗
+settings put global sbedge_clock_line1_bold 0    # 第一行单独关掉
+settings put global sbedge_clock_line2_bold 1    # 第二行单独打开
+pkill -f com.android.systemui
+```
+
+行间距（两行之间的距离）：
+
+```sh
+settings put global sbedge_clock_line_spacing 0.9   # 行距倍数，默认 0.9，1.0 为正常，越小越紧
+settings put global sbedge_clock_line_extra_dp -1   # 在倍数基础上再加减几 dp（可为负），默认 0
+pkill -f com.android.systemui
+```
+
+- 星期只显示一个字（如“二”）用 `EEEEE`，`E` 是“周二”，`EEEE` 是“星期二”。
 - 删除设置即恢复单行：`settings delete global sbedge_clock_format`。
 - 使用时请关闭 OneUIX 的“状态栏时钟格式”，两者会改同一个时钟。
 
